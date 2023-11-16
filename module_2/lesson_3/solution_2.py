@@ -1,9 +1,10 @@
-name_1 = "Света"
-name_2 = "Олег"
-name_3 = "Маша"
-name_4 = "Паша"
+employees = ["Света", "Маша", "Олег", "Паша"]
 
-print(f"В чётные дни работает: {name_1}, {name_2}\n\nВ нечётные дни: {name_3}, {name_4}")
+even_days = employees[::2] # чет
+odd_days = employees[1::2] # не чет
+
+print(f"В чётные дни работает: {even_days}\n\nВ нечётные дни: {odd_days}")
+
 
 
 """

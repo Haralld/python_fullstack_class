@@ -4,9 +4,10 @@ price_list = []
 
 while price != 0:
     price = float(input("Введите цену на товар(ноль закончит ввод): "))
-    price_list.append(price)
+    if price != 0:
+        price_list.append(price)
 
-average_price = sum(price_list) / (len(price_list) - 1)
+average_price = sum(price_list) / (len(price_list))
     
 print(f"Средняя цена товаров состовляет {round(average_price, 2)}")
 

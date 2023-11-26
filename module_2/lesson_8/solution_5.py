@@ -1,21 +1,11 @@
 input_first = input("Введите список товаров первого магазина: ")
-first_store = input_first.split(", ")
+first_store = set(input_first.split(", "))
 
 input_second = input("Введите список товаров второго магазина: ")
-second_store = input_second.split(", ")
+second_store = set(input_second.split(", "))
 
-only_first_store = []
-only_second_store = []
-
-for item in first_store:
-    if item not in second_store:
-        only_first_store.append(item)
-    
-
-for item in second_store:
-    if item not in first_store:
-        only_second_store.append(item)
-
+only_first_store = first_store.difference(second_store)
+only_second_store = second_store.difference(first_store)
 
 print(f"Только в первом магазине: {only_first_store}")
 print(f"Только во втором магазине: {only_second_store}")

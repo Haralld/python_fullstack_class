@@ -7,8 +7,11 @@ products_dict = {
 
 product = input("Введите товар: ")
 
-print("Цена: ", products_dict[product])
-
+if product in products_dict:
+    print("Цена: ", products_dict[product])
+else:
+    print("Данный товар отсутствует.")
+    
 """
 Задача 1: Словарь цен
 

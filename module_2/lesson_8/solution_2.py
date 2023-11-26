@@ -7,7 +7,7 @@ words_dict = {
 
 while True:
     word = input("Введите слово: ")
-    if word == word in words_dict:
+    if word in words_dict:
         print("Синоним: ", words_dict[word])
     else:
         print("Такого слова нет в словаре")

@@ -1,5 +1,5 @@
 input_items_price = input("Введите цены и скидку: ")
-price_list = [int(x) for x in input_items_price.split(', ')]
+price_list = [float(x) for x in input_items_price.split(', ')]
 
 def calculate_discount(prices):
     price_list = prices[:-1]

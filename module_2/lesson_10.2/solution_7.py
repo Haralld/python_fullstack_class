@@ -16,7 +16,7 @@ def calculate_discount(prices, index=0, previous_price=None):
 result = calculate_discount(prices)
 result_int = [int(x) for x in result]
 
-print("Выходные данные:", result)
+print("Выходные данные:", result_int)
 
 
 

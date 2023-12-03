@@ -15,6 +15,7 @@ def responsible_employee(employee_dict):
     return responsible_employees
 
 responsible_employees = responsible_employee(employee_dict)
+result = ', '.join(map(str, responsible_employees))
 
 print("Самый ответственный сотрудник: ", responsible_employees)
 

@@ -1,16 +1,18 @@
 input_prices = input("Список цен: ")
-price_list = [float(x) for x in input_prices.split(', ')]
+price_list = [int(x) for x in input_prices.split(', ')]
 
 def find_max_price(price_list):
-    if len(price_list) != 0:
-        price_list.sort()
-        max_price = price_list[-1]
-    return max_price
+    if len(price_list) == 0:
+        return None
+    elif len(price_list) == 1:
+        return price_list[0]
+    else:
+        max_price = find_max_price(price_list[1:])
+        return price_list[0] if price_list[0] > max_price else max_price
 
 result = find_max_price(price_list)
 
 print(result)
-
 
 """
 Задача 6: Поиск максимального элемента

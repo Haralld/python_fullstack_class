@@ -4,10 +4,10 @@ visits = int(input("Посещений: "))
 if visits < 10:
     print(f"Итоговая цена: {price}")
 elif 10 <= visits < 20:
-    end_price = price - (price * (10 // 100))
+    end_price = int(price - (price * (10 / 100)))
     print(f"Итоговая цена: {end_price}")
 else:
-    end_price = price - (price * (20 // 100))
+    end_price = int(price - (price * (20 / 100)))
     print(f"Итоговая цена: {end_price}")
 
 

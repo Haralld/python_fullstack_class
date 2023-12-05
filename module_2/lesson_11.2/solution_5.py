@@ -4,9 +4,8 @@ month_len_2 = 31
 def sales_schedule_with_range(month_len):
     sales_days = []
     
-    for day in range(1, month_len + 1):
-        if day % 3 == 0:
-            sales_days.append(day)
+    for day in range(3, month_len + 1, 3):
+        sales_days.append(day)
 
     return sales_days
 

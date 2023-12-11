@@ -2,29 +2,16 @@ order_1 = {'id': 1, 'items': ['book', 'pen']}
 order_2 = {'id': 2, 'items': []}
 
 def check_order(order):   # проверка
-    if order and 'items' in order and len(order['items']) > 0:
-        return "Успешная проверка"
-    else:
-        return f"Заказ {order['id']} пуст"
+    return bool(order.get('items'))
 
 def package_order(order):  # упаковка
-    if order:
-        return "Успешная упаковка"
-    else:
-        return "Нечего упаковывать"
+    return bool(order)
 
 def send_order(check_function, package_function, order):  # Отправка
-    checked_result = check_function(order)
-
-    if "Успешная" in checked_result:
-        packaged_result = package_function(order)
-        if "Успешная" in packaged_result:
-            return f"Отправка: Упакован заказ {order['id']}"
-        else:
-            return f"Отправка: {packaged_result}"
+    if check_function(order): 
+        return f"Отправка: Упакован заказ {order['id']}" if package_function(order) else "Отправка: Нечего упаковывать"
     else:
-        return f"Отправка: {checked_result}"
-
+        return f"Отправка: Заказ {order['id']} пуст"
 
 print(send_order(check_order, package_order, order_1))
 print(send_order(check_order, package_order, order_2))

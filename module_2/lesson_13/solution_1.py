@@ -1,13 +1,18 @@
-product_1 = ("Кресло", 5000, 4500)
-product_2 = ("Стол", 8000, 7600)
+def price_change(func):
+    def wrapper(item, old_price, new_price):
+        result = func(item, old_price, new_price)
+        print(f"Цена на {item} изменилась! {old_price} > {new_price}")
+        return result
+
+    return wrapper
 
 
-def change_price(product):
-     print(f"Цена на {product[0]} изменилась! {product[1]} > {product[2]}")
+@price_change
+def change_price(item, old_price, new_price):
+     return new_price
 
-change_price(product_1)
-change_price(product_2)
-
+new_price_1 = change_price("Кресло", 5000, 4500)
+new_price_2 = change_price("Стол", 6000, 5500)
 """
 Задание 1: Логирование изменений стоимости товаров
 

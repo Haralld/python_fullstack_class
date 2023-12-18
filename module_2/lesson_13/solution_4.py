@@ -1,6 +1,6 @@
 def validate_input(func):
-    def wrapper(project_name, num_tasks):
-        if len(locals()) != 3:  # Проверка количества аргументов
+    def wrapper(project_name, num_tasks, *agrs, **kwargs):
+        if len(args) != 0 or len(kwargs) != 0:  # Проверка количества аргументов
             raise ValueError("Функция должна состоять из двух аргументов")
         
         if not isinstance(project_name, str):# Проверка типа первого аргумента
@@ -19,7 +19,7 @@ def estimate_time(project_name, num_tasks):
     return result
 
 try:
-    project_1 = estimate_time("Веб-сайт", "пять")
+    project_1 = estimate_time("Веб-сайт", "пять", 3)
     print(project_1)
 except ValueError as ve:
     print(f"Ошибка: {ve}")

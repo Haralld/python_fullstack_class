@@ -1,19 +1,27 @@
 from functools import lru_cache
 
-@lru_cache(maxsize=None)
-def calculate_project_cost(project_name, busines_type):
-    result = f"Стоимость проэкта {project_name} для {busines_type}: 3000"
-    return result
+def calculate_and_print_cost(func):
+    @lru_cache(maxsize=None)
+    def wrapper(project_name, business_type):
+        cost_result = func(project_name, business_type)
+        cache_info = wrapper.cache_info()
+        if cache_info.hits:
+            print(f"Загрузили из кеша цену: {cost_result}")
+        else:
+            print(f"Посчитали цену: {cost_result}")
+        return cost_result
+
+    return wrapper
+
+@calculate_and_print_cost
+def calculate_project_cost(project_name, business_type):
+    return 3000
 
 project_1 = ("Логотип", "малый бизнес")
 project_2 = ("Логотип", "малый бизнес")
-project_3 = ("Логотип", "крупный бизнес")
 
-print(calculate_project_cost(*project_1)) 
-print(calculate_project_cost(*project_2)) # результат будет взят из кэша
-print(calculate_project_cost(*project_3)) # результат будет пересчитан из за изменения параметров
-
-
+calculate_project_cost(*project_1)
+calculate_project_cost(*project_2)  
 """
 Задание 3: Кеширование результатов расчёта стоимости проектов
 

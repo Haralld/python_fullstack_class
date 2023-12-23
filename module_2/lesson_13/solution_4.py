@@ -1,5 +1,5 @@
 def validate_input(func):
-    def wrapper(project_name, num_tasks, *agrs, **kwargs):
+    def wrapper(project_name, num_tasks, *args, **kwargs):
         if len(args) != 0 or len(kwargs) != 0:  # Проверка количества аргументов
             raise ValueError("Функция должна состоять из двух аргументов")
         

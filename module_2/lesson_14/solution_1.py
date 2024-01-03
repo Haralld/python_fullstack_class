@@ -1,18 +1,10 @@
 def grayscale_gen(shade_max):
-    grayscale = []
-
-    for i in range(0, shade_max, 5):
-        shade = (i, i, i)
-        grayscale.append(shade)
-
-    return grayscale
-
-
-shade_list = grayscale_gen(51)
+    return [(i, i, i,) for i in range(0, shade_max, 5)]
+    
+shade_list = grayscale_gen(250)
 
 for shade in shade_list:
     print(shade)
-
 """
 Задача 1: 50 оттенков серого
 Описание:

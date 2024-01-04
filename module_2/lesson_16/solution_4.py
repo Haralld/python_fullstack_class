@@ -1,13 +1,28 @@
 """Анализ расположения товаров"""
 
 
-input_shelves = int(input("Введите количество полок: "))
+def create_shelves(data):
+    """
+    компилирует текстовые данные в список
+    """
+    items = data.split(';')  # разделяем данные на полки
+    item_sales = [list(map(int, item.split(","))) for item in items]    # разделяем каждую стоку на числа и преобразуем в матрицу
 
-input_items = input("Введите количесво товара: ")
-items = input_items.split(';')  # разделяем данные на полки
-item_sales = [list(map(int, item.split(","))) for item in items]    # разделяем каждую стоку на числа и преобразуем в матрицу
+    return item_sales
 
-print(f"Продажи: {item_sales}")
+
+# пример использования
+items_1 = "5,3;7,2"
+items_2 = "2,6,4;3,5,7;1,2,3"
+
+finished_shelves_1 = create_shelves(items_1)
+finished_shelves_2 = create_shelves(items_2)
+
+# вывод данных
+print(f"Продажи: {finished_shelves_1}")
+print(f"Продажи: {finished_shelves_2}")
+
+
 
 """
 Задача 4: Роман анализирует эффективность расположения товаров

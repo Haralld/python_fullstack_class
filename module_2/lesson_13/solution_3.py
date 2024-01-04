@@ -1,27 +1,37 @@
-from functools import lru_cache
+"""Кэширование результатов расчёта стоимости проектов"""
 
-def calculate_and_print_cost(func):
-    @lru_cache(maxsize=None)
-    def wrapper(project_name, business_type):
-        cost_result = func(project_name, business_type)
-        cache_info = wrapper.cache_info()
-        if cache_info.hits:
-            print(f"Загрузили из кеша цену: {cost_result}")
-        else:
-            print(f"Посчитали цену: {cost_result}")
-        return cost_result
+# Функция кэширования
+def cache_results(func):
+    cache = {}  # словарь для хранения кэша
+
+    def wrapper(*args, **kwargs):   # внутрення функция заменяющая оригинальную func
+        key = args + tuple(kwargs.items()) # ключ дял кэша
+        if key not in cache:    # проверка наличия ключа, если совпадений нет происходит выполнение функции и сохранение результата в кэш
+            result = func(*args, **kwargs)  # вызывает функцию
+            cache[key] = result # сохраняем результат
+            print(f"Результат {result} добавлен в кеш.")   #выводим сообщении о добавлении в кэш
+        else:   # если ключ есть в кэше, выводим сообщение о его наличии
+            cached_result = cache[key]
+            print(f"Результат для проекта с параметрами {key} взят из кеша равный {cached_result}")
+        return cache[key] # возвращаем результат из кэша
 
     return wrapper
 
-@calculate_and_print_cost
-def calculate_project_cost(project_name, business_type):
-    return 3000
+# Применяем декоратор к фунуции с расчётами
+@cache_results
+def calculate_project_cost(par_1, par_2, par_3):
+    # проводим расчёт стоимости проекта
+    result = par_1 + par_2 + par_3
+    print(f"Расчёт стоимости проекта с параметрами {par_1}, {par_2}, {par_3} равен {result}")
+    return result
 
-project_1 = ("Логотип", "малый бизнес")
-project_2 = ("Логотип", "малый бизнес")
+# Пример использования
+project_cost_1 = calculate_project_cost(1, 2, 3)    # Новые параметры, будет проведён новый расчёт  
+project_cost_2 = calculate_project_cost(1, 2, 3)    # Результат будет взят из кеша
+project_cost_3 = calculate_project_cost(4, 5, 6)    # Новые параметры, будет проведён новый расчёт
+project_cost_4 = calculate_project_cost(1, 2, 3)    # Результат будет взят из кеша
 
-calculate_project_cost(*project_1)
-calculate_project_cost(*project_2)  
+
 """
 Задание 3: Кеширование результатов расчёта стоимости проектов
 

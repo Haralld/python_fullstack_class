@@ -8,39 +8,18 @@ def matrix_gen(size):
         size (int): размер матрици
 
     return:
-        matrix (list): 
+        matrix (list): матрицу 
     """
-    matrix = [["*"] * size for _ in range(size)]
+    matrix = [["0"] * size for _ in range(size)]
     
-    # заполняем нулями от верхнего левого до нижнего правого угла
     for i in range(size):
-        matrix[i][i] = 0
-
-    # заполняем от правого верхнего до левого нижнего угла
-    for i in range(size):
-        if i != size // 2: # исключаем центральное место
-            matrix[i][size - 1 - i] = 5
-
-    # заполняем верхнюю часть квадрата
-    for i in range(size):
+        if i != size // 2:  # исключаем центральное место
+            matrix[i][size - 1 - i] = 5 # заполняем от правого верхнего до левого нижнего угла
         for j in range(i + 1, size - 1 - i):
-            matrix[i][j] = 1
-
-    # заполняем левую часть квадрата
-    for i in range(size):
-        for j in range(i + 1, size - 1 - i):
-            matrix[j][i] = 2
-
-    # заполняем нижнюю часть квадрата 
-    for i in range(size - 1, 0, -1):
-        for j in range(size - i, i):
-            matrix[i][j] = 3
-
-
-    # заполняес правую часть квадрата
-    for i in range(size - 1, 0, -1):
-        for j in range(size - i, i):
-            matrix[j][i] = 4        
+            matrix[i][j] = 1    # заполняем верхнюю часть квадрата
+            matrix[j][i] = 2    # заполняем левую часть квадрата
+            matrix[size - 1 - i][j] = 3 # заполняем нижнюю часть квадрата 
+            matrix[j][size - 1 - i] = 4 # заполняем правую часть квадрата 
     
     return matrix
 

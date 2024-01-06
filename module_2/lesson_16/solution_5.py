@@ -14,11 +14,7 @@ def spiral_matrix_gen(side):
     matrix = [[0] * side for i in range(side)]
 
     # инициализация переменных
-    top = 0
-    left = 0
-    bottom = side - 1    
-    right = side - 1
-    step = 1
+    top, left, bottom, right, step = 0, 0, side - 1, side - 1, 1
 
     while top <= bottom and left <= right:
         # заполнение верхнего ряда
@@ -50,22 +46,29 @@ def spiral_matrix_gen(side):
     return matrix
 
 
+def spiral_matrix_print(matrix):
+    """
+    Функция выводит матрицу
+    """
+    max_num_length = len(str(max(max(matrix)))) + 1  # находим длину самого длинного числа в матрице
+    print("Матрица проэктов:")
+    
+    for row in matrix:
+        formatted_row = [str(num).rjust(max_num_length) for num in row]
+        print(" ".join(formatted_row))
+
+
+
 # пример использования 
-side_1 = 3
-side_2 = 4
+side_1 = 5
+side_2 = 15
 
 spiral_matrix_1 = spiral_matrix_gen(side_1)
 spiral_matrix_2 = spiral_matrix_gen(side_2)
 
 # вывод матрицы
-print("Матрица проектов:")
-for row in spiral_matrix_1:
-    print(" ".join(map(str, row)))
-
-# вывод матрицы
-print("Матрица проектов:")
-for row in spiral_matrix_2:
-    print(" ".join(map(str, row)))
+spiral_matrix_print(spiral_matrix_1)
+spiral_matrix_print(spiral_matrix_2)
 
 """
 Задача 5: Спиральная матрица дизайна 🔥🔥

@@ -1,35 +1,105 @@
-"""Кэширование результатов расчёта стоимости проектов"""
+"""Кэширование данных"""
 
-# Функция кэширования
-def cache_results(func):
-    cache = {}  # словарь для хранения кэша
 
-    def wrapper(*args, **kwargs):   # внутрення функция заменяющая оригинальную func
-        key = args + tuple(kwargs.items()) # ключ дял кэша
-        if key not in cache:    # проверка наличия ключа, если совпадений нет происходит выполнение функции и сохранение результата в кэш
-            result = func(*args, **kwargs)  # вызывает функцию
-            cache[key] = result # сохраняем результат
-            print(f"Результат {result} добавлен в кеш.")   #выводим сообщении о добавлении в кэш
-        else:   # если ключ есть в кэше, выводим сообщение о его наличии
-            cached_result = cache[key]
-            print(f"Результат для проекта с параметрами {key} взят из кеша равный {cached_result}")
-        return cache[key] # возвращаем результат из кэша
+cache = {}  # Глобальная переменная для кеша
 
-    return wrapper
+def compiler_type(param_1, param_2):
+    # Проверяем, являются ли параметры списками или множествами
+    if isinstance(param_1, (list, set)):
+        param_1 = tuple(sorted(param_1))
+    if isinstance(param_2, (list, set)):
+        param_2 = tuple(sorted(param_2))
 
-# Применяем декоратор к фунуции с расчётами
-@cache_results
-def calculate_project_cost(par_1, par_2, par_3):
-    # проводим расчёт стоимости проекта
-    result = par_1 + par_2 + par_3
-    print(f"Расчёт стоимости проекта с параметрами {par_1}, {par_2}, {par_3} равен {result}")
-    return result
+    # Проверяем, есть ли результат для данных параметров в кеше
+    key = (param_1, param_2) if isinstance(param_1, tuple) or isinstance(param_2, tuple) else (param_1, param_2)
+    if key in cache:
+        # Если есть, возвращаем результат из кеша и указываем, что результат взят из кеша
+        return cache[key], True
+    else:
+        # Если нет, возвращаем None и указываем, что результат не взят из кеша
+        return None, False
 
-# Пример использования
-project_cost_1 = calculate_project_cost(1, 2, 3)    # Новые параметры, будет проведён новый расчёт  
-project_cost_2 = calculate_project_cost(1, 2, 3)    # Результат будет взят из кеша
-project_cost_3 = calculate_project_cost(4, 5, 6)    # Новые параметры, будет проведён новый расчёт
-project_cost_4 = calculate_project_cost(1, 2, 3)    # Результат будет взят из кеша
+def cache_result(param_1, param_2, result):
+    # Проверяем, являются ли параметры списками или множествами
+    if isinstance(param_1, (list, set)):
+        param_1 = tuple(sorted(param_1))
+    if isinstance(param_2, (list, set)):
+        param_2 = tuple(sorted(param_2))
+
+    # Сохраняем результат в кеше
+    key = (param_1, param_2) if isinstance(param_1, tuple) or isinstance(param_2, tuple) else (param_1, param_2)
+    cache[key] = result
+
+def calculate_project_cost(param_1, param_2):
+    # Первая функция с вычислениями
+    result_cached, from_cache = compiler_type(param_1, param_2)
+    if result_cached is not None and from_cache:
+        print(f"Результат взят из кеша: {result_cached}")
+        return result_cached
+    else:
+        # Если результат не в кеше, проводим расчет
+        if isinstance(param_1, str) or isinstance(param_2, str):
+            result = str(param_1) + str(param_2)
+        else:
+            result = param_1 + param_2
+        # Сохраняем результат в кеше
+        cache_result(param_1, param_2, result)
+        print(f"Результат посчитан снова: {result}")
+        return result
+
+# Пример использования с разными типами данных
+
+# Пример 1: Строки
+str_1 = "Hello"
+str_2 = "World"
+str_result = calculate_project_cost(str_1, str_2)
+
+str_new_1 = "Good"
+str_new_2 = "Morning"
+str_new_result = calculate_project_cost(str_new_1, str_new_2)
+
+str_cached_1 = "Hello"
+str_cached_2 = "World"
+str_cached_result = calculate_project_cost(str_cached_1, str_cached_2)
+
+# Пример 2: Числа
+num_1 = 15
+num_2 = 300
+num_result = calculate_project_cost(num_1, num_2)
+
+num_new_1 = 5
+num_new_2 = 10
+num_new_result = calculate_project_cost(num_new_1, num_new_2)
+
+num_cached_1 = 15
+num_cached_2 = 300
+num_cached_result = calculate_project_cost(num_cached_1, num_cached_2)
+
+# Пример 3: Списки
+list_1 = [1, 2, 3]
+list_2 = [4, 5, 6]
+list_result = calculate_project_cost(list_1, list_2)
+
+list_new_1 = [7, 8, 9]
+list_new_2 = [10, 11, 12]
+lest_result_new = calculate_project_cost(list_new_1, list_new_2)
+
+list_cached_1 = [1, 2, 3]
+list_cached_2 = [4, 5, 6]
+list_cached_result = calculate_project_cost(list_cached_1, list_cached_2)
+
+# Пример 4: Множества
+set_1 = {1, 2, 3}
+set_2 = {4, 5, 6}
+set_result = calculate_project_cost(set_1, set_2)
+
+set_new_1 = {7, 8, 9}
+set_new_2 = {10, 11, 12}
+set_new_result = calculate_project_cost(set_new_1, set_new_2)
+
+set_cached_1 = {1, 2, 3}
+set_cached_2 = {4, 5, 6}
+set_cached_result = calculate_project_cost(set_cached_1, set_cached_2)
 
 
 """

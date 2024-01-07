@@ -1,38 +1,32 @@
-"""Кэширование данных"""
+cash = {
+    'args': None,
+    'result': None
+}  # Словарь для хранения кэшированных результатов
 
-cache_calls = {}    # Словарь для хранения кэшированных результатов
-
-def cache(func):
-
-    def wrapper(*args, **kwargs):
-        tuple_args = args + tuple(kwargs.items())
+def check_args(func):
+    def wrapper(*args):
         # Проверяем, есть ли результат в кэше
-        if tuple_args in cache_calls:
+        if cash['args'] == args:
             # Возвращаем кэшированный результат
-            return cache_calls[tuple_args]
-        # Если результат не найден в кэше, вызываем оригинальную функцию
-        result = func(*args, **kwargs)
-        # Сохраняем результат в кэше
-        cache_calls[tuple_args] = result
-        return result
-    
+            return f"Загрузили из кэша: {cash['result']}"
+        else:
+            # Если результат не найден в кэше, вызываем оригинальную функцию
+            result = func(*args)
+            cash['args'] = args
+            cash['result'] = result
+            return f"Посчитали цену: {result}"
+
     return wrapper
 
-@cache
-def calculate_project_cost(a=1, b=2, c=3):
+@check_args
+def calculate_project_cost(*args):
     # Функция, которая вычисляет результат
-    for i in range(100_000_000):
-        i += a + b + c
-    return i
+    return 3000
 
 # Примеры использования
-print(calculate_project_cost(10, c=30))
-print(calculate_project_cost(10, c=30))
-print(calculate_project_cost(10, c=30))
+print(calculate_project_cost(('Логотип', 'Малый бизнес')))
+print(calculate_project_cost(('Логотип', 'Малый бизнес')))
+print(calculate_project_cost(('Логотип', 'Большой бизнес')))
+print(calculate_project_cost(('Логотип', 'Большой бизнес')))
+print(calculate_project_cost({'Логотип', 'Малый бизнес'}))
 
-print(calculate_project_cost(5, 15, 20))
-print(calculate_project_cost(5, 15, 20))
-print(calculate_project_cost(5, 15, 20))
-
-print(calculate_project_cost({5, 15, 20}))
-print(calculate_project_cost({5, 15, 20}))

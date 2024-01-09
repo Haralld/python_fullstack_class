@@ -6,7 +6,7 @@ from telebot.types import Message
 from dotenv import load_dotenv
 from datetime import datetime
 import os
-import re
+
 
 # загрузка переменных окружения
 load_dotenv(".env")

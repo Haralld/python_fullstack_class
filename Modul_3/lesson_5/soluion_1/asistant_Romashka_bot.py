@@ -63,7 +63,7 @@ def delete_task(message: Message) -> None:
     task_index = int(text)
     if 1 <= task_index <= len(tasks):
         tasks.pop(task_index - 1)  # удаляем задачу с указанным номером
-        bot.send_message(user_id, f"Ваша задача удалена. Для просмотра списка ваших задач введите /show_tasks")
+        bot.send_message(user_id, "Ваша задача удалена. Для просмотра списка ваших задач введите /show_tasks")
     else:
         bot.send_message(user_id, "Некорректный номер задачи. Пожалуйста, укажите существующий номер.")
 

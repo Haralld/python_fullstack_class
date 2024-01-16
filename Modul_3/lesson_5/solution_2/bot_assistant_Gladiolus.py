@@ -17,6 +17,9 @@ class Purchase:
         self.price = price
         self.purchase_date = datetime.now().strftime("%d-%m-%Y")
 
+    def __str__(self):
+        return f"{self.item_name} - {self.price} руб. ({self.purchase_date})"
+
 class Client:
     def __init__(self, user_id, first_name, last_name, birth_date, card_id):
         self.user_id = user_id
@@ -39,15 +42,6 @@ def add_client(user_id, first_name, last_name, birth_date, card_id):
         clients.append(new_client)
         bot.send_message(user_id, "Клиент успешно записан. Для просмотра списка клиентов отправьте /show_base")
 
-def add_purchase(user_id, item_name, price):
-    existing_client = next((client for client in clients if client.user_id == user_id), None)
-
-    if existing_client:
-        new_purchase = Purchase(item_name, price)
-        existing_client.purchases.append(new_purchase)
-        return True
-    else:
-        return False
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message: Message) -> None:
@@ -108,13 +102,24 @@ def client_info(message: Message) -> None:
             f"Дата рождения: {client_info.birth_date}\n"
             f"ID карты: {client_info.card_id}\n"
         )
+
+        if client_info.purchases:
+            purchases_info = "\nПокупки:\n"
+            for purchase in client_info.purchases:
+                purchases_info += str(purchase) + "\n"
+            full_info += purchases_info
+        else:
+            full_info += "\nПокупок нет."
+
         bot.send_message(user_id, full_info)
     except (ValueError, IndexError):
         bot.send_message(user_id, "Некорректный номер клиента. Пожалуйста, введите /client_info и номер клиента.")
 
+
+
 @bot.message_handler(commands=["add_purchase"])
-def add_purchase(message: Message) -> None:
-    """Добавляем товар"""
+def handle_add_purchase(message: Message) -> None:
+    """Добавляет товар"""
     user_id: int = message.chat.id
     text: str = message.text[13:].strip()
 
@@ -147,7 +152,7 @@ def add_purchase(message: Message) -> None:
         bot.send_message(user_id, "Некорректный формат ввода. Используйте /add_purchase card_id, название_товара, цена.")
 
 @bot.message_handler(commands=['delete_client'])
-def add_purchases(message: Message) -> None:
+def delete_client(message: Message) -> None:
     """Функция удаления клиента"""
     user_id: int = message.chat.id
     text = message.text[14:].strip()

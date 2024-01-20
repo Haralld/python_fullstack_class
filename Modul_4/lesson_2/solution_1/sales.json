@@ -1,0 +1,53 @@
+{
+
+    "sales": [
+  
+      {
+  
+        "product": "Футболка",
+  
+        "category": "Одежда",
+  
+        "quantity": 3,
+  
+        "total_price": 1500
+  
+      },
+  
+      {
+  
+        "product": "Чашка",
+  
+        "category": "Посуда",
+  
+        "quantity": 2,
+  
+        "total_price": 700
+  
+      },
+  
+      {
+        "product": "Шорты",
+  
+        "category": "Одежда",
+  
+        "quantity": 6,
+  
+        "total_price": 1300
+      },
+
+      {
+        "product": "Тарелка",
+  
+        "category": "Посуда",
+  
+        "quantity": 5,
+  
+        "total_price": 1000
+      }
+  
+    ]
+  
+  }
+  
+  

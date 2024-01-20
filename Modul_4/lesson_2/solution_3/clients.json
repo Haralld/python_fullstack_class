@@ -1,0 +1,16 @@
+{
+  "clients": [
+    {
+      "name": "вася",
+      "surname": "пупкин",
+      "birthday": "10.10.2000",
+      "bonuses": 54310
+    },
+    {
+      "name": "петя",
+      "surname": "зайцев",
+      "birthday": "15.01.1999",
+      "bonuses": 1563
+    }
+  ]
+}

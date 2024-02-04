@@ -13,7 +13,6 @@ if not os.path.exists(folder_path):
     os.makedirs(folder_path)
     print(f"Папка {folder_path} успешно создана.")
 
-
 # Создаем файлы и записываем названия файлов в каждый файл в папке 'files' - для эмитации работы по заданию
 for number in range(start_number, end_number + 1):
     current_file_name = f"files/{number}.txt"

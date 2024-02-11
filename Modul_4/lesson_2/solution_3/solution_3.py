@@ -1,6 +1,6 @@
 import json
 import csv
-from datetime import datetime
+from datetime import datetime, date
 import re
 
 class Client:
@@ -10,18 +10,23 @@ class Client:
         self.birthday = birthday
         self.bonuses = bonuses
 
-    def verification_client(self):
-        """проверка клиента по необходимым параметрам"""
-
-        if not (0 <= self.bonuses <= 10000000): # проверка бонусов
+    @staticmethod
+    def verification_client(name, surname, birthday, bonuses):
+        """Проверка клиента по необходимым параметрам."""
+        
+        # Проверка бонусов
+        if not (0 <= bonuses <= 10000000):
             return False
 
-        if not (re.match(r'^[А-Яа-я\s]+$', self.name) and re.match(r'^[А-Яа-я\s]+$', self.surname)):  # проверка на кирилицу
+        # Проверка имени и фамилии на наличие только символов кириллицы
+        if not (re.match(r'^[А-Яа-яЁё\s]+$', name) and re.match(r'^[А-Яа-яЁё\s]+$', surname)):
             return False
         
         try:
-            date = datetime.strptime(self.birthday, '%d.%m.%Y').year
-            if not (1950 <= date):
+            # Проверка даты рождения
+            birth_date = datetime.strptime(birthday, '%d.%m.%Y').date()
+            current_date = date.today()
+            if birth_date > current_date or birth_date.year < 1950:
                return False
         except ValueError:
             return False
@@ -29,28 +34,27 @@ class Client:
         return True
     
 def cvs_to_json(file):
-    processed_rec = 0   # обрабонанные клиенты
-    missing_rec = 0 # пропущенные клиенты
+    """Функция для переформатирования данных из csv файла в json."""
+    processed_rec = 0   # Обработанные клиенты
+    missing_rec = 0     # Пропущенные клиенты
 
-    with open(file, 'r', encoding='utf-8') as csv_file: # читаем csv фаил
+    with open(file, 'r', encoding='utf-8') as csv_file: # Читаем csv файл
         csv_reader = csv.DictReader(csv_file)
 
-        clients = []        
+        clients = [] 
         for row in csv_reader:
             try:
-                name = row['name'].lower()
-                surname = row['surname'].lower()
-                birthday = row['birthday']
-                bonuses = int(row['bonuses'])
+                name = row['Name'].lower()
+                surname = row['Surname'].lower()
+                birthday = row['Birthday']
+                bonuses = int(row['Bonuses'])
 
-                client = Client(name, surname, birthday, bonuses)
-
-                if client.verification_client():    # проверка клиента
+                if Client.verification_client(name, surname, birthday, bonuses):    # Проверка клиента
                     clients.append({
-                        'name': client.name,
-                        'surname': client.surname,
-                        'birthday': client.birthday,
-                        'bonuses': client.bonuses
+                        'name': name,
+                        'surname': surname,
+                        'birthday': birthday,
+                        'bonuses': bonuses
                     })
                     processed_rec += 1
 
@@ -60,11 +64,11 @@ def cvs_to_json(file):
             except (ValueError, KeyError):
                 missing_rec += 1
 
-    with open('clients.json', 'w', encoding='utf-8') as json_file: # запись прошедших клиентов в json фаил
+    with open('clients.json', 'w', encoding='utf-8') as json_file: # Запись прошедших клиентов в json файл
         json.dump({'clients': clients}, json_file, ensure_ascii=False, indent=2)
 
-    print(f'Было обработано(клиентов): {processed_rec} \nБыло пропущено(клиентов): {missing_rec}') # вывод результатов записи
+    # Вывод результатов обработки
+    print(f'Было обработано(клиентов): {processed_rec} \nБыло пропущено(клиентов): {missing_rec}')
 
 
 cvs_to_json('clients.csv')
-

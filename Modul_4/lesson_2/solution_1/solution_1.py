@@ -1,7 +1,7 @@
 import json
 
 # чтение данных из файла
-with open('sales.json', 'r') as json_file:
+with open('sales.json', 'r', encoding="utf-8") as json_file:
     json_data= json.load(json_file)
 
 
@@ -12,7 +12,7 @@ def  calculation_revenue(data):
 
     for sale in data['sales']:
         category = sale['category']
-        total_price = sale['total_price']
+        total_price = sale['total_price'] * sale['quantity']
 
         if category not in end_info:    
             end_info[category] = total_price

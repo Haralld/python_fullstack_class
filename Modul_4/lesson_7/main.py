@@ -16,25 +16,29 @@ def show_string(s):
     return f'Hello, {s}'
 
 # для обработки числовых параметров
-# http://127.0.0.1:5000/sum 
-@app.route('/sum/<float:x>/<float:y>') # сложение
-def sum(x, y):
+# http://127.0.0.1:5000/add 
+@app.route('/<x>/<y>/add') # сложение
+def add(x, y):
+    x, y = float(x), float(y)
     return f'{x} + {y} = {x + y}'
         
 # http://127.0.0.1:5000/sub
-@app.route('/sub/<float:x>/<float:y>')    # вычитание
+@app.route('/<x>/<y>/sub')    # вычитание
 def sub(x, y):
+    x, y = float(x), float(y)
     return f'{x} - {y} = {x - y}'
 
 # http://127.0.0.1:5000/mul
-@app.route('/mul/<float:x>/<float:y>')    # умножение
+@app.route('/<x>/<y>/mul')    # умножение
 def mul(x, y):
+    x, y = float(x), float(y)
     return f'{x} * {y} = {x * y}'
 
 # http://127.0.0.1:5000/div
-@app.route('/div/<float:x>/<float:y>')    # деление
+@app.route('/<x>/<y>/div')    # деление
 def div(x, y):
-    if y != 0:
+    x, y = float(x), float(y)
+    if y:
         return f'{x} / {y} = {x / y}'        
     else:
         return 'На ноль делить нельзя'

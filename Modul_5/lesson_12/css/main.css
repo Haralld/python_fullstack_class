@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap');
+.body{
+    background: #fff6ef;
+    font-family: 'Prompt', sans-serif;
+}
+
+.logo{
+
+    text-align: center;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 42px */
+}
+
+.button{
+    
+    width: 100%;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 9px;
+}
+.menu-wrapper{
+    font-style: normal;
+    font-size: 14px;
+    display: flex;
+    padding: 11px;
+    line-height: 140%;
+}
+.menu{
+    padding: 20px 0;
+}
+.menu-structur{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: left;
+}
+.menu-structur li{
+    margin-right: 70px;
+}
+.menu-structur li:last-child{
+    margin-right: 0px;
+}
+.menu-structur a{
+    text-decoration: none;
+    color: black;
+}
+
+.slider-wrapper{
+    
+    height: 700px;
+    
+}
+.slide{
+    height: 600px;  
+    border-radius: 20px;  
+}
+.carousel-indicators{
+    top: 620px;    
+}
+.carousel-indicators [data-bs-target]{
+    background: #6A9B96;
+    width: 12px;
+    height: 16px;
+    border: none;
+}
+.section-title{
+    margin-top: 120px;
+    margin-bottom: 75px;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 300px;
+    line-height: 140%;
+}
+.nav-color{
+    background-color: #C3D2CB;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.modal-container{
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    margin-top: 199px;
+}
+.footer{
+    margin-top: 141px;
+    padding: 22px;
+}
+
+.tabs-text{
+    padding: 58px 116px 58px 34px;
+    width: 100%;
+    height: 198px;
+   
+}
+.tabs-button{
+    border-radius: 20px 20px 0px 0px;
+}
+.tabs-navigation{
+    margin-top: 177px;
+}

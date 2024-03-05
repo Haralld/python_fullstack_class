@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Квалификация цветов</title>
+    <link rel="icon" href="{{ url_for('static', filename='red-flower.ico') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            background: linear-gradient(to button, #74ebd5, #acb6e5);
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            background: white;
+            border-radius: 8px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+        img {
+            margin-top: 20px;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Квалификация цветов</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".jpg, .jpeg, .png" required>
+            <button type="submit">Предсказать</button>
+        </form>
+
+        {% if result %}
+            <h2>Результат:</h2>
+             <p>Вид: {{ result['class'] }}</p>
+             <p>Вероятность: {{ result['probability'] | round(2) }}%</p>
+             <img src="data:image/jpeg;base64,{{ result['image'] }}" alt="Uploaded Image">
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -60,7 +60,7 @@ def predict():
 def get_base64_image(image):
     buffered = BytesIO()
     image.save(buffered, format='JPEG')
-    return base64.b64decode(buffered.getvalue()).decode('utf-8')
+    return base64.b64encode(buffered.getvalue()).decode('utf-8')
 
 
 if __name__ == '__main__':
